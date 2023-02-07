@@ -89,9 +89,20 @@ onMounted(async () => {
     let { weatherCityInfo } = await useFetchData(city);
     weatherItems.value = [];
     weatherItems.value = [...weatherItems.value, ...weatherCityInfo.value];
+
+    getCitiesFromStorage();
     return;
   });
+
 });
+
+function getCitiesFromStorage(){
+  if(localStorage.getItem("cities")){
+    let dataFromStorage: string = localStorage.getItem("cities");
+  weatherItems.value = JSON.parse(dataFromStorage);
+  }
+
+}
 </script>
 
 <style lang="scss">

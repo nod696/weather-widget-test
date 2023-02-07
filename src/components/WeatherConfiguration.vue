@@ -70,6 +70,7 @@ let drag = ref(false);
 let addCity = async () => {
   let { weatherCityInfo } = await useFetchData(inputCity.value);
   citiesArray.value = [...citiesArray.value, ...weatherCityInfo.value];
+  saveCities();
 };
 
 let deleteCity = (element: object) => {
@@ -78,11 +79,16 @@ let deleteCity = (element: object) => {
       return city !== element;
     }
   );
+  saveCities();
 };
 
 watchEffect(() => {
   emit("changeData", citiesArray.value);
 });
+
+function saveCities(){
+  localStorage.setItem("cities", JSON.stringify(citiesArray.value));
+}
 </script>
 
 <style>
